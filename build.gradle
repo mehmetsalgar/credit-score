@@ -29,7 +29,6 @@ apply plugin: 'org.unbroken-dome.helm'
 apply plugin: 'org.unbroken-dome.helm-publish'
 
 group = 'org.salgar.akka.fsm'
-version = '1.0.4'
 sourceCompatibility = '17'
 
 ext {
@@ -97,7 +96,7 @@ helm {
 		cs {
 			publish = true
 			chartName = 'credit-score-application'
-			chartVersion = '1.1.0'
+			chartVersion = "${project.version}"
 			sourceDir = file('helm')
 			filtering {
 				values.put 'imageRepository', jib.to.image
