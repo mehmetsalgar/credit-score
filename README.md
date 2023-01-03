@@ -1,1 +1,2 @@
-Initial Readme
+gitversion /showconfig
+gitversion /showvariable FullSemVer
