@@ -2,10 +2,9 @@ name: Cleanup after Branch Delete
 run-name: Cleanup after Branch Delete triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   delete:
-    branches:
-      - release/**
 jobs:
   call-cleanup-workflow:
+    if: ${{ contains(github.ref, 'refs/heads/release/') }}
     uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/cleanup-for-service.yaml@master
     with:
       repo-name: "credit-score"
