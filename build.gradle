@@ -25,8 +25,6 @@ plugins {
 }
 
 apply plugin: 'com.google.cloud.tools.jib'
-apply plugin: 'org.unbroken-dome.helm'
-apply plugin: 'org.unbroken-dome.helm-publish'
 
 group = 'org.salgar.akka.fsm'
 sourceCompatibility = '17'
@@ -42,7 +40,8 @@ if(ext.flag) {
 			DOCKER_UPLOAD_USER: property('DOCKER_UPLOAD_USER'),
 			DOCKER_UPLOAD_PASSWORD: property('DOCKER_UPLOAD_PASSWORD'),
 			HELM_USER: property('HELM_USER'),
-			HELM_PASSWORD: property('HELM_PASSWORD')
+			HELM_PASSWORD: property('HELM_PASSWORD'),
+			HELM_DOWNLOAD_CLIENT: property('HELM_DOWNLOAD_CLIENT')
 	]
 }
 
@@ -91,40 +90,63 @@ jib {
 	allowInsecureRegistries = true
 }
 
-helm {
-	charts {
-		cs {
-			publish = true
-			chartName = 'credit-score-application'
-			chartVersion = "${project.version}"
-			sourceDir = file('helm')
-			filtering {
-				values.put 'imageRepository', jib.to.image
-				values.put 'imageTag', jib.to.tags.first()
-				values.put 'appVersion', jib.to.tags.first()
+if(helmProcess()) {
+	apply plugin: 'org.unbroken-dome.helm'
+	apply plugin: 'org.unbroken-dome.helm-publish'
+
+	helm {
+		downloadClient {
+			enabled = downloadHelmClient()
+			version = '3.10.1'
+		}
+		charts {
+			cs {
+				publish = true
+				chartName = 'credit-score-application'
+				chartVersion = "${project.version}"
+				sourceDir = file('helm')
+				filtering {
+					values.put 'imageRepository', jib.to.image
+					values.put 'imageTag', jib.to.tags.first()
+					values.put 'appVersion', jib.to.tags.first()
+				}
 			}
 		}
-	}
-	repositories {
-		cs_rep {
-			url 'http://fsmakka.salgar.org/repository/fsm-akka-helm/'
-			credentials {
-				username = "${props.HELM_USER}"
-				password = "${props.HELM_PASSWORD}"
-			}
-		}
-	}
-	publishing {
 		repositories {
-			nexus {
-				url = uri('http://fsmakka.salgar.org/')
-				repository = 'fsm-akka-helm'
-				apiVersion = 'v1'
+			cs_rep {
+				url 'http://fsmakka.salgar.org/repository/fsm-akka-helm/'
 				credentials {
 					username = "${props.HELM_USER}"
 					password = "${props.HELM_PASSWORD}"
 				}
 			}
 		}
+		publishing {
+			repositories {
+				nexus {
+					url = uri('http://fsmakka.salgar.org/')
+					repository = 'fsm-akka-helm'
+					apiVersion = 'v1'
+					credentials {
+						username = "${props.HELM_USER}"
+						password = "${props.HELM_PASSWORD}"
+					}
+				}
+			}
+		}
 	}
+}
+
+def helmProcess() {
+	if("true" == property("HELM_PROCESS"))
+		true
+	else
+		false
+}
+
+def downloadHelmClient() {
+	if("true" == property("HELM_DOWNLOAD_CLIENT"))
+		true
+	else
+		false
 }
