@@ -43,8 +43,7 @@ if(ext.flag) {
 			HELM_URL: property('HELM_URL'),
 			HELM_USER: property('HELM_USER'),
 			HELM_PASSWORD: property('HELM_PASSWORD'),
-			HELM_DOWNLOAD_CLIENT: property('HELM_DOWNLOAD_CLIENT'),
-			CI_PIPELINE_ID: property('CI_PIPELINE_ID')
+			HELM_DOWNLOAD_CLIENT: property('HELM_DOWNLOAD_CLIENT')
 	]
 }
 
