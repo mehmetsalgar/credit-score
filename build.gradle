@@ -154,3 +154,6 @@ def downloadHelmClient() {
 	else
 		false
 }
+
+//tasks.helmPackage.dependsOn tasks.jib
+tasks.build.dependsOn tasks.jib
