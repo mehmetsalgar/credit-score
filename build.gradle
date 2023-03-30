@@ -11,7 +11,7 @@ buildscript {
 	dependencies {
 		classpath('com.google.cloud.tools:jib-native-image-extension-gradle:0.1.0')
 		classpath "org.unbroken-dome.gradle-plugins.helm:helm-plugin:1.7.0"
-		classpath "org.unbroken-dome.gradle-plugins.helm:helm-publish-plugin:1.7.0"
+		//classpath "org.unbroken-dome.gradle-plugins.helm:helm-publish-plugin:1.7.0"
 	}
 }
 
@@ -100,7 +100,7 @@ if(helmProcess()) {
 	helm {
 		downloadClient {
 			enabled = downloadHelmClient()
-			version = '3.10.1'
+			version = '3.11.2'
 		}
 		charts {
 			cs {
@@ -115,7 +115,7 @@ if(helmProcess()) {
 				}
 			}
 		}
-		repositories {
+		/*repositories {
 			cs_rep {
 				url "${props.HELM_URL}"
 				credentials {
@@ -136,7 +136,7 @@ if(helmProcess()) {
 					}
 				}
 			}
-		}
+		}*/
 	}
 }
 

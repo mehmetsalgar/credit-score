@@ -41,7 +41,7 @@ continuous-deployment-development:
     REPO_NAME: $CI_PROJECT_NAME
     VERSION: $GitVersion_SemVer
   trigger:
-    project: 'org/salgar/fsm/akka/gitlab-pipelines'
+    project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
     strategy: depend
   rules:
     - if: '$CI_COMMIT_BRANCH == "development"'
