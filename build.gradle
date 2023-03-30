@@ -95,7 +95,7 @@ jib {
 
 if(helmProcess()) {
 	apply plugin: 'org.unbroken-dome.helm'
-	apply plugin: 'org.unbroken-dome.helm-publish'
+	//apply plugin: 'org.unbroken-dome.helm-publish'
 
 	helm {
 		downloadClient {
