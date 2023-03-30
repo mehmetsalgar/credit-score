@@ -37,8 +37,10 @@ if(ext.flag) {
 	ext.props = [
 			DOCKER_HUB_USER: property('DOCKER_HUB_USER'),
 			DOCKER_HUB_PASSWORD: property('DOCKER_HUB_PASSWORD'),
+			DOCKER_URL: property('DOCKER_URL'),
 			DOCKER_UPLOAD_USER: property('DOCKER_UPLOAD_USER'),
 			DOCKER_UPLOAD_PASSWORD: property('DOCKER_UPLOAD_PASSWORD'),
+			HELM_URL: property('HELM_URL'),
 			HELM_USER: property('HELM_USER'),
 			HELM_PASSWORD: property('HELM_PASSWORD'),
 			HELM_DOWNLOAD_CLIENT: property('HELM_DOWNLOAD_CLIENT')
@@ -80,10 +82,11 @@ jib {
 		}
 	}
 	to {
-		image = "fsm-akka.registry:5555/fsmakka/${project.name}"
+		image = "${props.DOCKER_URL}/${project.name}"
 		tags = ["${project.version}"]
 		auth {
 			username = "${props.DOCKER_UPLOAD_USER}"
+			//password = file("/tmp/${props.CI_PIPELINE_ID}.json").text
 			password = "${props.DOCKER_UPLOAD_PASSWORD}"
 		}
 	}
@@ -114,7 +117,7 @@ if(helmProcess()) {
 		}
 		repositories {
 			cs_rep {
-				url 'http://fsmakka.salgar.org/repository/fsm-akka-helm/'
+				url "${props.HELM_URL}"
 				credentials {
 					username = "${props.HELM_USER}"
 					password = "${props.HELM_PASSWORD}"
@@ -150,3 +153,6 @@ def downloadHelmClient() {
 	else
 		false
 }
+
+//tasks.helmPackage.dependsOn tasks.jib
+tasks.build.dependsOn tasks.jib
