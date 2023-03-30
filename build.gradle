@@ -104,7 +104,7 @@ if(helmProcess()) {
 		}
 		charts {
 			cs {
-				publish = true
+				//publish = true
 				chartName = 'credit-score-application'
 				chartVersion = "${project.version}"
 				sourceDir = file('helm')
