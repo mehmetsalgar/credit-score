@@ -17,12 +17,12 @@ before_script:
   - export GRADLE_USER_HOME
 
 include:
-  - project: 'org/salgar/fsm/akka/ci-cd-gitlab-pipelines'
+  - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
     file: '/jobs/gitversion-ci-cd-plugin-extension.gitlab-ci.yml'
-  - project: 'org/salgar/fsm/akka/ci-cd-gitlab-pipelines'
+  - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
     file: '/jobs/gradle.yml'
-  - project: 'org/salgar/fsm/akka/ci-cd-gitlab-pipelines'
-    file: '/jobs/helm-service.yml'
+  - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
+    file: '/jobs/helm-push-service.yml'
 
 variables:
   SERVICE_CHART_NAME: "credit-score"
