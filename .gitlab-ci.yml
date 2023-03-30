@@ -25,7 +25,7 @@ include:
     file: '/jobs/helm-push-service.yml'
 
 variables:
-  SERVICE_CHART_NAME: "credit-score"
+  SERVICE_CHART_NAME: "credit-score-application"
 
 determine-version:
   extends: .gitversion_function
