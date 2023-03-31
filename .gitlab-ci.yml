@@ -26,6 +26,7 @@ include:
 
 variables:
   SERVICE_CHART_NAME: "credit-score-application"
+  GRADLE_COMMAND: "--build-cache --no-daemon build -Pversion=$GitVersion_SemVer"
 
 determine-version:
   extends: .gitversion_function
@@ -40,6 +41,7 @@ continuous-deployment-development:
     BRANCH_NAME: $CI_COMMIT_BRANCH
     REPO_NAME: $CI_PROJECT_NAME
     VERSION: $GitVersion_SemVer
+    GRADLE_COMMAND: "helmPackage -Pversion=$GitVersion_SemVer"
   trigger:
     project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
     strategy: depend
