@@ -44,6 +44,7 @@ continuous-deployment-development:
     GRADLE_COMMAND: "helmPackage -Pversion=$GitVersion_SemVer"
   trigger:
     project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
+    branch: 'development'
     strategy: depend
   rules:
     - if: '$CI_COMMIT_BRANCH == "development"'
