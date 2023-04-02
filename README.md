@@ -1,4 +1,4 @@
 gitversion /showconfig
 gitversion /showvariable FullSemVer
 
-dev-52
+dev-53
