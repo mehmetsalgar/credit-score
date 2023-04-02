@@ -41,7 +41,6 @@ continuous-deployment-development:
   variables:
     BRANCH_NAME: $CI_COMMIT_BRANCH
     REPO_NAME: $CI_PROJECT_NAME
-    GRADLE_COMMAND: "helmPackage -Pversion="
   trigger:
     project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
     branch: 'development'
