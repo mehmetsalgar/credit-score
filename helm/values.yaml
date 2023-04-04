@@ -66,11 +66,11 @@ resources:
   limits:
     cpu: 500m
     memory: 512Mi
-    ephemeral-storage: 2GB
+    ephemeral-storage: 2Gi
   requests:
     cpu: 100m
     memory: 256Mi
-    ephemeral-storage: 1GB
+    ephemeral-storage: 1Gi
 
 autoscaling:
   enabled: false
