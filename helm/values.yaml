@@ -77,7 +77,8 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
+nodeSelector:
+  iam.gke.io/gke-metadata-server-enabled: "true"
 
 tolerations: []
 
