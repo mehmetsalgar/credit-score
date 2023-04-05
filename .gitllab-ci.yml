@@ -18,11 +18,14 @@ variables:
 
 workflow:
   - if: $CI_COMMIT_REF_NAME == "development"
+    when: always
     variables:
       USE_CASE_1: "true"
   - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    when: always
     variables:
       USE_CASE_2: "true"
+  - when: never
 
 include:
   - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
