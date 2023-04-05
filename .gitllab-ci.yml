@@ -1,0 +1,99 @@
+stages:
+  - .pre
+  - build
+  - deploy
+
+variables:
+  SERVICE_CHART_NAME: "credit-score-application"
+  USE_CASE_1: "false"
+  USE_CASE_2: "false"
+  USE_CASE_3: "false"
+  USE_CASE_4: "false"
+  USE_CASE_5: "false"
+  USE_CASE_6: "false"
+  USE_CASE_7: "false"
+  USE_CASE_8: "false"
+  USE_CASE_9: "false"
+  USE_CASE_10: "false"
+
+workflow:
+  - if: $CI_COMMIT_REF_NAME == "development"
+    variables:
+      USE_CASE_1: "true"
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    variables:
+      USE_CASE_2: "true"
+
+include:
+  - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
+    file: '/jobs/gitversion-ci-cd-plugin-extension.gitlab-ci.yml'
+    rules:
+      - if: $USE_CASE_1 ==  "true" || $USE_CASE_2 ==  "true"
+  - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
+    file: '/jobs/gradle.yml'
+    rules:
+      - if: $USE_CASE_1 ==  "true" || $USE_CASE_2 ==  "true"
+  - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
+    file: '/jobs/helm-push-service.yml'
+    rules:
+      - if: $USE_CASE_1 ==  "true" || $USE_CASE_2 ==  "true"
+
+determine-version:
+  extends: .gitversion_function
+
+continuous-deployment-development:
+  stage: deploy
+  needs:
+    - job: determine-version
+      artifacts: true
+    - helm-push-service
+  variables:
+    BRANCH_NAME: $CI_COMMIT_BRANCH
+    REPO_NAME: $CI_PROJECT_NAME
+  trigger:
+    project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
+    branch: 'development'
+    strategy: depend
+  rules:
+    - if: $USE_CASE_1 ==  "true"
+      when: always
+    - when: never
+
+continuous-deployment-pull-request-create-branch:
+  stage: deploy
+  needs:
+    - job: determine-version
+      artifacts: true
+    - helm-push-service
+  variables:
+    BRANCH_NAME: $CI_COMMIT_BRANCH
+    REPO_NAME: $CI_PROJECT_NAME
+    CREATE_BRANCH: "true"
+  trigger:
+    project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
+    branch: 'development'
+    strategy: depend
+  rules:
+    - if: $USE_CASE_2 ==  "true"
+      when: always
+    - when: never
+
+continuous-deployment-pull-request:
+  stage: deploy
+  needs:
+    - job: determine-version
+      artifacts: true
+    - helm-push-service
+    - continuous-deployment-pull-request-create-branch
+  variables:
+    BRANCH_NAME: $CI_COMMIT_BRANCH
+    REPO_NAME: $CI_PROJECT_NAME
+    SERVICE_CHART_VERSION: $GitVersion_SemVer
+  trigger:
+    project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
+    branch: $CI_COMMIT_BRANCH
+    strategy: depend
+  rules:
+    - if: $USE_CASE_2 ==  "true"
+      when: always
+    - when: never
