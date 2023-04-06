@@ -4,6 +4,7 @@ stages:
   - deploy
 
 variables:
+  SOURCE_REPO: "credit-score"
   SERVICE_CHART_NAME: "credit-score-application"
   BUILD_VERSION: $GitVersion_SemVer
   GRADLE_COMMAND: "--build-cache --no-daemon build -Pversion="
