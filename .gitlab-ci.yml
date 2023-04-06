@@ -97,6 +97,19 @@ continuous-deployment-pull-request:
     - if: $USE_CASE_2 == "true"
       when: always
     - when: never
+
+continuous-deployment-pull-request-prepare-environment:
+  stage: deploy
+  needs:
+    - continuous-deployment-pull-request
+  script:
+    - |
+      export
+      echo "Preparing environment Pull Request"
+  rules:
+    - if: $USE_CASE_2 == "true"
+      when: always
+    - when: never
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     on_stop: cleanup-pull-request-environment
