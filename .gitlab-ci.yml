@@ -5,6 +5,8 @@ stages:
 
 variables:
   SERVICE_CHART_NAME: "credit-score-application"
+  BUILD_VERSION: $GitVersion_SemVer
+  GRADLE_COMMAND: "--build-cache --no-daemon build -Pversion="
   USE_CASE_1: "false"
   USE_CASE_2: "false"
   USE_CASE_3: "false"
