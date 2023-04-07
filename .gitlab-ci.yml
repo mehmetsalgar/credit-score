@@ -33,7 +33,7 @@ workflow:
       when: always
       variables:
         USE_CASE_2: "true"
-    - when: always
+    - when: never
 
 include:
   - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
@@ -64,11 +64,29 @@ continuous-deployment-development:
       when: always
     - when: never
 
+continuous-deployment-pull-request-export:
+  stage: deploy
+  needs:
+    - job: determine-version
+      artifacts: true
+  variables:
+    BRANCH_NAME: $CI_COMMIT_BRANCH
+    REPO_NAME: $CI_PROJECT_NAME
+    CREATE_BRANCH: "true"
+  script:
+    - |
+      export
+  rules:
+    - if: $USE_CASE_2 == "true"
+      when: always
+    - when: never
+
 continuous-deployment-pull-request-create-branch:
   stage: deploy
   needs:
     - job: determine-version
       artifacts: true
+    - continuous-deployment-pull-request-export
   variables:
     BRANCH_NAME: $CI_COMMIT_BRANCH
     REPO_NAME: $CI_PROJECT_NAME
