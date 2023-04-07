@@ -70,7 +70,7 @@ continuous-deployment-pull-request-export:
     - job: determine-version
       artifacts: true
   variables:
-    BRANCH_NAME: $CI_COMMIT_BRANCH
+    BRANCH_NAME: $CI_COMMIT_REF_NAME
     REPO_NAME: $CI_PROJECT_NAME
     CREATE_BRANCH: "true"
   script:
@@ -88,7 +88,7 @@ continuous-deployment-pull-request-create-branch:
       artifacts: true
     - continuous-deployment-pull-request-export
   variables:
-    BRANCH_NAME: $CI_COMMIT_BRANCH
+    BRANCH_NAME: $CI_COMMIT_REF_NAME
     REPO_NAME: $CI_PROJECT_NAME
     CREATE_BRANCH: "true"
   trigger:
@@ -107,12 +107,12 @@ continuous-deployment-pull-request:
       artifacts: true
     - continuous-deployment-pull-request-create-branch
   variables:
-    BRANCH_NAME: $CI_COMMIT_BRANCH
+    BRANCH_NAME: $CI_COMMIT_REF_NAME
     REPO_NAME: $CI_PROJECT_NAME
     SERVICE_CHART_VERSION: $GitVersion_SemVer
   trigger:
     project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
-    branch: "$BRANCH_NAME-$REPO_NAME"
+    branch: "${BRANCH_NAME}-${REPO_NAME}"
     strategy: depend
   rules:
     - if: $USE_CASE_2 == "true"
