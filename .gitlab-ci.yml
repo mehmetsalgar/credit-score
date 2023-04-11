@@ -67,7 +67,6 @@ continuous-deployment-pull-request-export:
       artifacts: true
   variables:
     BRANCH_NAME: $CI_COMMIT_REF_NAME
-    REPO_NAME: $CI_PROJECT_NAME
     CREATE_BRANCH: "true"
   script:
     - |
@@ -85,7 +84,6 @@ continuous-deployment-pull-request-create-branch:
     - continuous-deployment-pull-request-export
   variables:
     BRANCH_NAME: $CI_COMMIT_REF_NAME
-    REPO_NAME: $CI_PROJECT_NAME
     CREATE_BRANCH: "true"
   trigger:
     project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
@@ -104,7 +102,6 @@ continuous-deployment-pull-request:
     - continuous-deployment-pull-request-create-branch
   variables:
     BRANCH_NAME: $CI_COMMIT_REF_NAME
-    REPO_NAME: $CI_PROJECT_NAME
     SERVICE_CHART_VERSION: $GitVersion_SemVer
   trigger:
     project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
