@@ -108,7 +108,7 @@ continuous-deployment-pull-request:
     SERVICE_CHART_VERSION: $GitVersion_SemVer
   trigger:
     project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
-    branch: "${BRANCH_NAME}-${REPO_NAME}"
+    branch: "$BRANCH_NAME-$SOURCE_REPO"
     strategy: depend
   rules:
     - if: $USE_CASE_2 == "true"
