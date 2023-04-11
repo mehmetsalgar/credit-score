@@ -75,6 +75,9 @@ continuous-deployment-pull-request-export:
     - if: $USE_CASE_2 == "true"
       when: always
     - when: never
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    on_stop: cleanup-pull-request-environment
 
 continuous-deployment-pull-request-create-branch:
   stage: deploy
@@ -126,9 +129,6 @@ continuous-deployment-pull-request-prepare-environment:
     - if: $USE_CASE_2 == "true"
       when: always
     - when: never
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    on_stop: cleanup-pull-request-environment
 
 cleanup-pull-request-environment:
   stage: deploy
