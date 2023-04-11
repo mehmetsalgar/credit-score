@@ -33,7 +33,7 @@ workflow:
       when: always
       variables:
         USE_CASE_2: "true"
-    - when: never
+    - when: always
 
 include:
   - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
