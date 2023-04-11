@@ -103,7 +103,7 @@ continuous-deployment-pull-request:
       artifacts: true
     - continuous-deployment-pull-request-create-branch
   variables:
-    BRANCH_NAME: $CI_COMMIT_BRANCH
+    BRANCH_NAME: $CI_COMMIT_REF_NAME
     REPO_NAME: $CI_PROJECT_NAME
     SERVICE_CHART_VERSION: $GitVersion_SemVer
   trigger:
