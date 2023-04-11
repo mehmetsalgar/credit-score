@@ -116,10 +116,12 @@ continuous-deployment-pull-request-prepare-environment:
   stage: deploy
   needs:
     - continuous-deployment-pull-request
-  script:
-    - |
-      export
-      echo "Preparing environment Pull Request"
+  variables:
+    BRANCH_NAME: $CI_COMMIT_REF_NAME-$SOURCE_REPO
+  trigger:
+    project: 'org.salgar.fsm.akka/fsm-akka-4eyes-argocd'
+    branch: 'feature/usecase2-credit-score'
+    strategy: depend
   rules:
     - if: $USE_CASE_2 == "true"
       when: always
