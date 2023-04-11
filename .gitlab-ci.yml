@@ -109,7 +109,7 @@ continuous-deployment-pull-request:
     SERVICE_CHART_VERSION: $GitVersion_SemVer
   trigger:
     project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
-    branch: "$BRANCH_NAME-$SOURCE_REPO"
+    branch: 'feature/usecase2-credit-score'
     strategy: depend
   rules:
     - if: $USE_CASE_2 == "true"
