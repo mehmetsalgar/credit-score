@@ -3,7 +3,11 @@ stages:
   - build
   - deploy
 
+services:
+  - docker:dind
+
 variables:
+  DOCKER_HOST: DOCKER_HOST=tcp://docker:2375
   SOURCE_REPO: "credit-score"
   SERVICE_CHART_NAME: "credit-score-application"
   BUILD_VERSION: $GitVersion_SemVer
@@ -133,6 +137,14 @@ continuous-deployment-pull-request-prepare-environment:
 
 cleanup-pull-request-environment:
   stage: deploy
+  variables:
+    TARGET_BRANCH_NAME: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+    USE_CASE_3: "true"
+  trigger:
+    include:
+      - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
+        file: 'cleanup-environment.yml'
+    strategy: depend
   script:
     - |
       export
