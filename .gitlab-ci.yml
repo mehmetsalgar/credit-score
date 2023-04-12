@@ -144,7 +144,7 @@ cleanup-pull-request-environment:
   trigger:
     include:
       - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
-        file: 'cleanup-environment.yml'
+        file: '/jobs/cleanup-environment.yml'
     strategy: depend
 #  environment:
 #    name: review/$CI_COMMIT_REF_SLUG
