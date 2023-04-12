@@ -89,7 +89,6 @@ continuous-deployment-pull-request-create-branch:
   needs:
     - job: determine-version
       artifacts: true
-    - continuous-deployment-pull-request-export
   variables:
     BRANCH_NAME: $CI_COMMIT_REF_NAME
     CREATE_BRANCH: "true"
