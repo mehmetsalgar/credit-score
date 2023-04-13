@@ -164,6 +164,10 @@ cleanup-pull-request-environment-environment-branch:
     project: 'org.salgar.fsm.akka/fsm-akka-dev-environment'
     branch: 'development'
     strategy: depend
+  rules:
+    - if: $USE_CASE_2 == "true"
+      when: manual
+    - when: never
 
 cleanup-pull-request-environment-umbrella-chart-branch:
   stage: deploy
@@ -175,3 +179,7 @@ cleanup-pull-request-environment-umbrella-chart-branch:
     project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
     branch: 'development'
     strategy: depend
+  rules:
+    - if: $USE_CASE_2 == "true"
+      when: manual
+    - when: never
