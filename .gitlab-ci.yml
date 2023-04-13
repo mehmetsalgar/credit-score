@@ -153,3 +153,25 @@ cleanup-pull-request-environment-argocd:
     - if: $USE_CASE_2 == "true"
       when: manual
     - when: never
+
+cleanup-pull-request-environment-environment-branch:
+  stage: deploy
+  needs:
+    - cleanup-pull-request-environment-argocd
+  variables:
+    USE_CASE_3: "true"
+  trigger:
+    project: 'org.salgar.fsm.akka/fsm-akka-dev-environment'
+    branch: 'development'
+    strategy: depend
+
+cleanup-pull-request-environment-umbrella-chart-branch:
+  stage: deploy
+  needs:
+    - cleanup-pull-request-environment-environment-branch
+  variables:
+    USE_CASE_3: "true"
+  trigger:
+    project: 'org.salgar.fsm.akka/fsm-akka-helm-umbrella-chart-gitlab'
+    branch: 'development'
+    strategy: depend
