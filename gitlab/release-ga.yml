@@ -1,4 +1,0 @@
-include:
-  - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
-    ref: 'development'
-    file: '/composite/build.yml'
