@@ -25,17 +25,4 @@ variables:
 include:
   - project: 'org.salgar.fsm.akka/ci-cd-gitlab-pipelines'
     ref: 'development'
-    file: '/jobs/ci.yml'
-
-release-ga:
-  stage: deploy
-  trigger:
-    include: '/gitlab/release-ga.yml'
-    forward:
-      pipeline_variables: true
-      yaml_variables: true
-    strategy: depend
-  rules:
-    - if: $USE_CASE_8 == "true"
-      when: manual
-    - when: never
+    file: '/composite/ci.yml'
