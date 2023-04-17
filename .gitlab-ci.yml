@@ -10,7 +10,6 @@ variables:
   DOCKER_HOST: DOCKER_HOST=tcp://docker:2375
   SOURCE_REPO: "credit-score"
   SERVICE_CHART_NAME: "credit-score-application"
-  BUILD_VERSION: $GitVersion_SemVer
   GRADLE_COMMAND: "--build-cache --no-daemon build -Pversion="
   USE_CASE_1: "false"
   USE_CASE_2: "false"
