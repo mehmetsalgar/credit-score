@@ -8,7 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 @Slf4j
 public class CreditScoreApplication {
     public static void main(String[] args) {
-        log.info("Credit Score Application is starting!");
+        log.info("Credit Score Application is starting! Cool!!!1");
         new SpringApplicationBuilder(CreditScoreApplication.class)
                 .registerShutdownHook(true)
                 .run(args);
