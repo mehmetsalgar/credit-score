@@ -1,6 +1,6 @@
 gitversion /showconfig
 gitversion /showvariable FullSemVer
 
-UC7-3
+R2.1.1-1
 
 kubectl create serviceaccount witest-service-account --namespace fsmakka
